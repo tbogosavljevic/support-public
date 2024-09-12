@@ -1,0 +1,16 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: f1-standard-2
+    os_image: ubuntu2204
+blocks:
+  - name: Initial Block
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo $SEMAPHORE_GIT_PR_SLUG
+            - echo $SEMAPHORE_GIT_PR_NUMBER
+            - 'pr_data=$(curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $git_token" "https://api.github.com/repos/$SEMAPHORE_GIT_PR_SLUG/pulls/$SEMAPHORE_GIT_PR_NUMBER")'
+            - '[[ $pr_data == *"skip ci"* ]] && echo "contains"'
