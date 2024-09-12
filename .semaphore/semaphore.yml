@@ -13,4 +13,5 @@ blocks:
             - echo $SEMAPHORE_GIT_PR_SLUG
             - echo $SEMAPHORE_GIT_PR_NUMBER
             - 'pr_data=$(curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GIT_BEARER" "https://api.github.com/repos/$SEMAPHORE_GIT_PR_SLUG/pulls/$SEMAPHORE_GIT_PR_NUMBER")'
+            - echo $pr_data
             - '[[ $pr_data == *"skip ci"* ]] && echo "contains"'
