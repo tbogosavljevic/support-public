@@ -4,12 +4,20 @@ COMMIT_SHA="${SEMAPHORE_GIT_SHA}"
 WHITELIST=("tbogosavljevic")
 ARTIFACT_FILE="commit-history.txt"
 TRIGGERED_BY="${SEMAPHORE_WORKFLOW_TRIGGERED_BY}"
+BRANCH_NAME="${SEMAPHORE_GIT_WORKING_BRANCH}"
 
+echo "🌿 Current branch: $BRANCH_NAME"
 echo "🚀 Starting rerun check..."
 echo "🔀 Current commit SHA: $COMMIT_SHA"
 echo "👤 Committer: $TRIGGERED_BY"
 echo "✅ Whitelisted users: ${WHITELIST[*]}"
 echo "📄 Artifact file: $ARTIFACT_FILE"
+echo "🌿 Current branch: $BRANCH_NAME"
+
+if [[ "$BRANCH_NAME" != "main" && "$BRANCH_NAME" != "master" ]]; then
+  echo "🚫 Not on 'main' or 'master' branch. Skipping rerun check."
+  exit 0
+fi
 
 echo "📥 Pulling artifact file..."
 if ! artifact pull project "$ARTIFACT_FILE"; then
