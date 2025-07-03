@@ -1,15 +1,20 @@
 version: v1.0
-name: Initial Pipeline
+name: Filter rerun based on user whitelist and branch
 agent:
   machine:
     type: e2-standard-2
     os_image: ubuntu2204
 blocks:
-  - name: Initial Block
+  - name: 'Block #1'
+    dependencies: []
     task:
       jobs:
-        - name: 'Job #1'
+        - name: 'Filter'
           commands:
             - checkout
-            - chmod +x ./webhook.sh
-            - ./webhook.sh "Test text"
+            - bash filter.sh
+            - echo "This was not filtered. Job is running."
+      agent:
+        machine:
+          type: e2-standard-4
+          os_image: ubuntu2004
