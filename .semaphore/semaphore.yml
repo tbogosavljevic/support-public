@@ -2,14 +2,97 @@ version: v1.0
 name: Initial Pipeline
 agent:
   machine:
-    type: e2-standard-2
-    os_image: ubuntu2204
+    type: e2-standard-4
+    os_image: ubuntu2004
 blocks:
-  - name: Initial Block
+  - name: Gold
+    dependencies: []
     task:
       jobs:
-        - name: 'Job #1'
+        - name: Gold
           commands:
-            - checkout
-            - chmod +x ./webhook.sh
-            - ./webhook.sh "Test text"
+            - echo "This is a block running checks."
+            - echo "If something is wrong, fail this block with 'exit 1' and it will stop execution."
+            - echo "But let's say the checks are OK, so continue with the pipeline (trigger auto promotions)"
+      agent:
+        machine:
+          type: e2-standard-2
+          os_image: ubuntu2404
+promotions:
+  - name: Promotion 1
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_1
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 2
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_2
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 3
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_3
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 4
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_4
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 5
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_5
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 6
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_6
+          description: ''
+          name: YOUR_VARIABLE
+  - name: Promotion 7
+    pipeline_file: promotion.yml
+    auto_promote:
+      when: branch = 'master' AND result = 'passed'
+    parameters:
+      env_vars:
+        - required: true
+          options: []
+          default_value: this_is_promotion_7
+          description: ''
+          name: YOUR_VARIABLE
