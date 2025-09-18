@@ -5,11 +5,20 @@ agent:
     type: e2-standard-2
     os_image: ubuntu2204
 blocks:
-  - name: Initial Block
+  - name: Cases
     task:
       jobs:
-        - name: 'Job #1'
+        - name: 'True'
           commands:
             - checkout
-            - chmod +x ./webhook.sh
-            - ./webhook.sh "Test text"
+            - export PIPEFAIL_CHECK=true
+            - bash ./script.sh
+        - name: 'False'
+          commands:
+            - checkout
+            - export PIPEFAIL_CHECK=false
+            - bash ./script.sh
+        - name: Empty
+          commands:
+            - checkout
+            - bash ./script.sh
